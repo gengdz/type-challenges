@@ -30,7 +30,22 @@
 
 /* _____________ 你的代码 _____________ */
 
-type MyOmit<T, K> = any
+// 这种写法通不过 第 3 个用例，原因在于 现在直接创建了一个新的类型，其中的属性被重新定义。
+// type MyOmit<T, K extends keyof T> = {
+//   [P in Exclude<keyof T, K>]: T[P]
+// }
+
+// type MyPick<T, K extends keyof T> = {
+//   [P in K]: T[P];
+// }
+// 这种可以的原因在于 MyPick 只是直接映射 K 中的属性，所以它保留了 readonly 修饰符
+// type MyOmit<T, K extends keyof T> = MyPick<T, Exclude<keyof T, K>>
+
+type MyOmit<T, K extends keyof T> = { [P in keyof T as P extends K ? never : P]: T[P] }
+//
+// type a = Exclude<keyof Todo, 'description' | 'invalid'>
+
+// type MyOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

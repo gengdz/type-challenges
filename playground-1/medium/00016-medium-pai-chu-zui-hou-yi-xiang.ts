@@ -26,8 +26,9 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Pop<T extends any[]> = any
+type Pop<T extends any[]> = T extends [...infer rest, infer L] ? rest : T['length'] extends 0 ? [] : never
 
+type a = Pop<[]>
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 

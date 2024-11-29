@@ -21,6 +21,6 @@ module.exports = antfu(
       'unused-imports/no-unused-vars': 'off',
     },
     // 不要对 playground 进行检查
-    ignorePatterns: ['playground-*/**/*'],
+    // ignorePatterns: ['playground-*/**/*'],
   },
 )
