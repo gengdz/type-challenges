@@ -29,7 +29,12 @@
 
 /* _____________ 你的代码 _____________ */
 
-type LookUp<U, T> = any
+// type LookUp<U, T> = U extends (infer A | infer B)
+//   ? A extends { type: string } ? A['type'] extends T ? A : B : never
+//   : never
+
+type LookUp<U, T> = U extends { type: T } ? U : never
+type a = LookUp<Animal, 'dog'>
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

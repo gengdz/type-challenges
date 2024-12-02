@@ -34,7 +34,7 @@
 /* _____________ 你的代码 _____________ */
 
 type MyReadonly<T> = {
- readonly [P in keyof T]: T[P]
+  readonly [P in keyof T]: T[P]
 }
 
 /* _____________ 测试用例 _____________ */

@@ -29,6 +29,8 @@
 //   [key in keyof T]: Awaited<T[key]>
 // }>
 
+// 如果直接使用 values: T 那么 T 会被推测为 (string | number | Promise<number>)[]
+// 如果使用 values: [...T]，那么 T 就是在元组中使用，就会被推断为更具体的每个元素的值
 declare function PromiseAll<T extends any[]>(values: [...T]): Promise<{
   [key in keyof T]: Awaited<T[key]>
 }>
