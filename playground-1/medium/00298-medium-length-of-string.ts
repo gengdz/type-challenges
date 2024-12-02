@@ -12,7 +12,16 @@
 
 /* _____________ 你的代码 _____________ */
 
-type LengthOfString<S extends string> = any
+type LengthOfString<
+  S extends string,
+  T extends string[] = [],
+> = S extends `${infer F}${infer R}`
+  ? LengthOfString<R, [...T, F]>
+  : T['length']
+
+// 说明 LengthOfString 中的 T 变成 ['h','e','l','l','o']，然后就可以计算长度了。
+
+type a = LengthOfString<'kumiko'>
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

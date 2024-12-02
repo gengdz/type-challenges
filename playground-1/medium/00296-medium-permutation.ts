@@ -16,7 +16,21 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Permutation<T> = any
+// type Permutation<T> = T extends infer H | infer T ? [H, T] | [T, H] : Permutation<T>
+
+type Permutation<T, K = T> =
+    [T] extends [never]
+      ? []
+      : K extends K
+        ? [K, ...Permutation<Exclude<T, K>>]
+        : never
+
+type A = [1, 2] | [3, 4]
+type B = ['a', 'b'] | ['c', 'd']
+
+type C = [true, ...A, ...B]
+type perm = Permutation<'A' | 'B' | 'C'>
+type a = 'A' | 'B' | 'C'
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

@@ -24,8 +24,21 @@
 
 /* _____________ 你的代码 _____________ */
 
-type KebabCase<S> = any
+// type KebabCase<S, R extends string = ''> = S extends `${infer Letter}${infer Rest}`
+//   ? Letter extends Uppercase<Letter>
+//     ? KebabCase<Rest, `${R}${R extends '' ? '' : Letter extends Lowercase<Letter> ? '' : '-'}${Lowercase<Letter>}`>
+//     : KebabCase<Rest, `${R}${Letter}`>
+//   : R
 
+type KebabCase<S extends string> = S extends `${infer S1}${infer S2}`
+  ? S2 extends Uncapitalize<S2>
+    ? `${Uncapitalize<S1>}${KebabCase<S2>}`
+    : `${Uncapitalize<S1>}-${KebabCase<S2>}`
+  : S
+
+type a = Uncapitalize<'-Bar'>
+type c = Lowercase<'FooBar'>
+type b = KebabCase<'foo_bar'>
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 

@@ -27,7 +27,27 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Diff<O, O1> = any
+// type Diff<O, O1> = {
+//   [P in Exclude<keyof O, keyof O1> | Exclude<keyof O1, keyof O>]: P extends keyof O ? O[P] : P extends keyof O1 ? O1[P] : never
+// }
+
+type Diff<O, O1> = Omit<O & O1, keyof (O | O1)>
+
+type result = keyof (Foo | Bar)
+
+type UnionType = Foo | Bar
+
+const a: UnionType = {
+  gender: 1,
+  age: '12',
+  name: '10',
+}
+type bb = keyof UnionType
+
+type result1 = UnionType | bb
+
+type aa = Exclude<keyof Bar, keyof Foo> | Exclude<keyof Foo, keyof Bar>
+type b = Diff<Foo, Bar>
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

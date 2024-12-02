@@ -19,7 +19,13 @@
 
 /* _____________ 你的代码 _____________ */
 
-type AnyOf<T extends readonly any[]> = any
+// type AnyOf<T extends readonly any[]> = T[number] extends true ? true : false
+
+type AnyOf<T extends any[]> = T[number] extends 0 | '' | false | [] | { [key: string]: never } | null | undefined
+  ? false : true
+
+// type a = AnyOf<[0, 1, '', false, [], {}, undefined, null]>
+type a = false extends 0 | '' | false | [] | undefined | null ? false : true
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
